@@ -14,6 +14,7 @@ import * as S from './SignUpForm.styles';
 interface SignUpFormData {
   firstName: string;
   lastName: string;
+  fullName: string;
   email: string;
   password: string;
 }
@@ -21,6 +22,7 @@ interface SignUpFormData {
 const initValues = {
   firstName: 'Chris',
   lastName: 'Johnson',
+  fullName: 'Chris Johnson',
   email: 'chris.johnson@altence.com',
   password: 'test-pass',
   confirmPassword: 'test-pass',
@@ -36,7 +38,7 @@ export const SignUpForm: React.FC = () => {
   const { notification } = useFeedback();
 
   const handleSubmit = (values: SignUpFormData) => {
-    setLoading(true);
+    // setLoading(true);
     dispatch(doSignUp(values))
       .unwrap()
       .then(() => {
@@ -44,7 +46,7 @@ export const SignUpForm: React.FC = () => {
           message: t('auth.signUpSuccessMessage'),
           description: t('auth.signUpSuccessDescription'),
         });
-        navigate('/auth/login');
+        // navigate('/auth/login');
       })
       .catch((err) => {
         notification.error({ message: err.message });
@@ -69,6 +71,13 @@ export const SignUpForm: React.FC = () => {
           rules={[{ required: true, message: t('common.requiredField') }]}
         >
           <Auth.FormInput placeholder={t('common.lastName')} />
+        </Auth.FormItem>
+        <Auth.FormItem
+          name="fullName"
+          label="Full Name"
+          rules={[{ required: true, message: t('common.requiredField') }]}
+        >
+          <Auth.FormInput placeholder={t('common.firstName')} />
         </Auth.FormItem>
         <Auth.FormItem
           name="email"
@@ -128,22 +137,6 @@ export const SignUpForm: React.FC = () => {
           <Auth.SubmitButton type="primary" htmlType="submit" loading={isLoading}>
             {t('common.signUp')}
           </Auth.SubmitButton>
-        </BaseForm.Item>
-        <BaseForm.Item noStyle>
-          <Auth.SocialButton type="default" htmlType="submit">
-            <Auth.SocialIconWrapper>
-              <GoogleIcon />
-            </Auth.SocialIconWrapper>
-            {t('signup.googleLink')}
-          </Auth.SocialButton>
-        </BaseForm.Item>
-        <BaseForm.Item noStyle>
-          <Auth.SocialButton type="default" htmlType="submit">
-            <Auth.SocialIconWrapper>
-              <FacebookIcon />
-            </Auth.SocialIconWrapper>
-            {t('signup.facebookLink')}
-          </Auth.SocialButton>
         </BaseForm.Item>
         <Auth.FooterWrapper>
           <Auth.Text>

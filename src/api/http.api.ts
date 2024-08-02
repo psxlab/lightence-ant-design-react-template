@@ -9,10 +9,13 @@ export const httpApi = axios.create({
 httpApi.interceptors.request.use((config) => {
   const headers = config.headers;
   headers.set('Authorization', `Bearer ${readToken()}`);
+  console.log('Starting Request', config);
+  console.log(`Full URL: ${config.baseURL}${config.url}`);
   return config;
 });
 
 httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
+  console.log(error)
   if (error.response) {
     const responseData = error.response.data as ApiErrorData;
     throw new ApiError<ApiErrorData>(responseData.message || error.message, responseData);

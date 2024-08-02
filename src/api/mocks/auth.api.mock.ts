@@ -44,7 +44,7 @@ httpApiMock.onPost('login').reply((config) => {
   } else return [401, { message: 'Invalid Credentials' }];
 });
 
-httpApiMock.onPost('signUp').reply(200);
+// httpApiMock.onPost('signUp').reply(200);
 
 httpApiMock.onPost('forgotPassword').reply(200);
 
